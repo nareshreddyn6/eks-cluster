@@ -176,7 +176,7 @@ resource "aws_autoscaling_group" "self-managed-autoscaling-group" {
   name                 = "self-managed-autoscaling-group"
 
 
-  vpc_zone_identifier  = [aws_subnet.self-managed-public-subnet.id]
+  vpc_zone_identifier  = [aws_subnet.self-managed-private-subnet.id]
   max_size             = 3
   min_size             = 2
   desired_capacity     = 2
