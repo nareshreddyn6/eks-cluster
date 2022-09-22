@@ -89,7 +89,8 @@ resource "aws_security_group" "self-managed-eks-cluster-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"] //all out going 
+    # cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${aws_eip.ec2-jump-eip.id}"]
   }
 tags = {
   Name ="self-managed-eks-cluster-sg"

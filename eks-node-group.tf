@@ -98,17 +98,17 @@ resource "aws_security_group" "self-managed-nodes-sg" {
   description = "Communication between all nodes in the cluster"
   vpc_id      = aws_vpc.self_managed_vpc.id
 
-  ingress {
+  /* ingress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
     self        = true
-  }
+  } */
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [local.myterraform-ip] 
+    cidr_blocks = ["${aws_eip.ec2-jump-eip.id}"]
   }
   ingress {
     from_port       = 0
@@ -178,8 +178,8 @@ resource "aws_autoscaling_group" "self-managed-autoscaling-group" {
 
   vpc_zone_identifier  = [aws_subnet.self-managed-public-subnet.id]
   max_size             = 3
-  min_size             = 1
-  desired_capacity     = 1
+  min_size             = 2
+  desired_capacity     = 2
 
   launch_template { 
    id = aws_launch_template.self_managed_node_template.id
